@@ -79,7 +79,7 @@ class Game extends React.Component {
   jumpTo(step) {
     this.setState({
       stepNumber: step,
-      nextTurn: Boolean(step % 2) ? "0" : "1"
+      nextTurn: Boolean(step % 2) ? "O" : "X"
     });
   }
 

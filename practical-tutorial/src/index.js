@@ -58,7 +58,7 @@ class Game extends React.Component {
     const current = history[history.length - 1];
     const squares = current.squares.slice();
 
-    if (squares) { // if already filled
+    if (squares[squareId] !== null) { // if square already filled
       return;
     }
 
@@ -111,7 +111,8 @@ class Game extends React.Component {
         <div className="game-board">
           <Board
               squares={current.squares}
-              onClick={(i) => this.handleClick(i)} />
+              onClick={(i) => this.handleClick(i)}
+          />
         </div>
         <div className="game-info">
           <div>{ status }</div>

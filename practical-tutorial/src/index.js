@@ -116,6 +116,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{ status }</div>
+          <p>Move history list:</p>
           <ol>{ moves }</ol>
         </div>
       </div>

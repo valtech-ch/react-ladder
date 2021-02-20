@@ -31,11 +31,11 @@ class Board extends React.Component {
   }
 
   render() {
+    const rows = [0, 1, 2].map(j => this.renderRow(j));
+
     return (
       <div>
-        {this.renderRow(0)}
-        {this.renderRow(1)}
-        {this.renderRow(2)}
+        { rows }
       </div>
     );
   }

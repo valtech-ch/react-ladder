@@ -10,6 +10,8 @@ function Square(props) {
   );
 }
 
+
+
 class Board extends React.Component {
   renderSquare(i) {
     return (
@@ -42,6 +44,8 @@ class Board extends React.Component {
   }
 }
 
+
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -49,6 +53,7 @@ class Game extends React.Component {
       history: [{ squares: [null, null, null, null, null, null, null, null, null] }],
       nextTurn: "X",
       stepNumber: 0,
+      sortAscending: true,
     };
   }
 
@@ -99,7 +104,7 @@ class Game extends React.Component {
         squares: squares,
       }]),
       nextTurn: this.state.nextTurn === "X" ? "O" : "X",
-      stepNumber: history.length
+      stepNumber: history.length,
     });
   }
 
@@ -115,7 +120,7 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {
+    let moves = history.map((step, move) => {
       let desc;
 
       if (move > 0) {
@@ -136,6 +141,10 @@ class Game extends React.Component {
       );
     });
 
+    if (!this.state.sortAscending) {
+      moves = moves.reverse();
+    }
+
     let status;
     if (winner) {
       status = "Winner: " + winner + " 🍾🥳🎈";
@@ -153,7 +162,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{ status }</div>
-          <p>Move history list:</p>
+          <p>
+            Move history list:
+            <button onClick={() => this.setState({ sortAscending: !this.state.sortAscending })}>Toggle sort</button>
+          </p>
           <ol>{ moves }</ol>
         </div>
       </div>

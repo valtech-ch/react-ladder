@@ -53,6 +53,34 @@ class Game extends React.Component {
     };
   }
 
+  /**
+   * @pre arrayA.length === arrayB.length
+   */
+  getFirstDifferencePosition(arrayA, arrayB) {
+    for (let i = 0; i < arrayA.length; i++) {
+      if (arrayA[i] !== arrayB[i]) {
+        return i;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @param stepNumber Integer between 1 and the last step in history
+   * @return {x: Number, y: Number} with the location of the move, zero-based values
+   */
+  getMoveLocation(stepNumber) {
+    const squaresAfterMove = [...this.state.history[stepNumber].squares];
+    const squaresBeforeMove = [...this.state.history[stepNumber - 1].squares];
+
+    const firstDifferencePosition = this.getFirstDifferencePosition(squaresBeforeMove, squaresAfterMove);
+
+    return {
+      x: firstDifferencePosition % 3,
+      y: Math.floor(firstDifferencePosition / 3)
+    };
+  }
+
   handleClick(squareId) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
@@ -89,9 +117,15 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
-      const desc = move ?
-        'Go to move #' + move :
-        'Go to game start';
+      let desc;
+
+      if (move > 0) {
+        const moveLocation = this.getMoveLocation(move);
+        desc = 'Go to move #' + move + ' (' + moveLocation.x + ', ' + moveLocation.y + ')';
+      } else {
+        desc = 'Go to game start';
+      }
+
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>

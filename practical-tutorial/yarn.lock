@@ -1719,7 +1719,7 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@*":
+"@types/jest@*", "@types/jest@^26.0.20":
   version "26.0.20"
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/jest/-/jest-26.0.20.tgz#cd2f2702ecf69e86b586e1f5223a60e454056307"
   integrity sha1-zS8nAuz2noa1huH1Ijpg5FQFYwc=
@@ -1747,6 +1747,11 @@
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/node/-/node-14.14.25.tgz#15967a7b577ff81383f9b888aa6705d43fbbae93"
   integrity sha1-FZZ6e1d/+BOD+biIqmcF1D+7rpM=
 
+"@types/node@^14.14.31":
+  version "14.14.31"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/node/-/node-14.14.31.tgz#72286bd33d137aa0d152d47ec7c1762563d34055"
+  integrity sha1-cihr0z0TeqDRUtR+x8F2JWPTQFU=
+
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -1762,10 +1767,30 @@
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/prettier/-/prettier-2.2.0.tgz#a4e8205a4955690eef712a6d0394a1d2e121e721"
   integrity sha1-pOggWklVaQ7vcSptA5Sh0uEh5yE=
 
+"@types/prop-types@*":
+  version "15.7.3"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
+  integrity sha1-KrDV2i5YFflLC51LldHl8kOrLKc=
+
 "@types/q@^1.5.1":
   version "1.5.4"
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
+
+"@types/react-dom@^17.0.1":
+  version "17.0.1"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/react-dom/-/react-dom-17.0.1.tgz#d92d77d020bfb083e07cc8e0ac9f933599a4d56a"
+  integrity sha1-2S130CC/sIPgfMjgrJ+TNZmk1Wo=
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^17.0.2":
+  version "17.0.2"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@types/react/-/react-17.0.2.tgz#3de24c4efef902dd9795a49c75f760cbe4f7a5a8"
+  integrity sha1-PeJMTv75At2XlaScdfdgy+T3pag=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
 
 "@types/resolve@0.0.8":
   version "0.0.8"
@@ -3805,6 +3830,11 @@ cssstyle@^2.2.0:
   integrity sha1-/2ZaDdvcMYZLCWR/NBY0Q9kLCFI=
   dependencies:
     cssom "~0.3.6"
+
+csstype@^3.0.2:
+  version "3.0.6"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/csstype/-/csstype-3.0.6.tgz#865d0b5833d7d8d40f4e5b8a6d76aea3de4725ef"
+  integrity sha1-hl0LWDPX2NQPTluKbXauo95HJe8=
 
 cyclist@^1.0.1:
   version "1.0.1"
@@ -10622,6 +10652,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@^4.1.5:
+  version "4.1.5"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/typescript/-/typescript-4.1.5.tgz#123a3b214aaff3be32926f0d8f1f6e704eb89a72"
+  integrity sha1-Ejo7IUqv874ykm8Njx9ucE64mnI=
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

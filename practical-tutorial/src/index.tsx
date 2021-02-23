@@ -2,7 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-function Square(props) {
+
+
+type SquareValue = string | null;
+
+
+
+function Square(props: {
+    highlighted: boolean,
+    onClick: () => void,
+    value: SquareValue,
+}) {
   const classes = [
     "square",
     props.highlighted ? "square--highlighted" : "",
@@ -17,8 +27,12 @@ function Square(props) {
 
 
 
-class Board extends React.Component {
-  renderSquare(i, highlighted) {
+class Board extends React.Component<{
+    highlightedSquares: number[],
+    onClick: (i: number) => void,
+    squares: SquareValue[],
+}> {
+  renderSquare(i: number, highlighted: boolean) {
     return (
       <Square
         key={i}
@@ -29,7 +43,7 @@ class Board extends React.Component {
     );
   }
 
-  renderRow(j) {
+  renderRow(j: number) {
     const rowSquares = [0, 1, 2].map(i => {
       const squareId = (j * 3) + i;
 
@@ -58,8 +72,16 @@ class Board extends React.Component {
 
 
 
-class Game extends React.Component {
-  constructor(props) {
+
+
+class Game extends React.Component<{
+}, {
+  history: {squares: SquareValue[]}[],
+  nextTurn: string,
+  stepNumber: number,
+  sortAscending: boolean,
+}> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       history: [{ squares: [null, null, null, null, null, null, null, null, null] }],
@@ -70,22 +92,23 @@ class Game extends React.Component {
   }
 
   /**
+   * @pre There is at least one difference between arrayA and arrayB
    * @pre arrayA.length === arrayB.length
    */
-  getFirstDifferencePosition(arrayA, arrayB) {
+  getFirstDifferencePosition(arrayA: SquareValue[], arrayB: SquareValue[]): number {
     for (let i = 0; i < arrayA.length; i++) {
       if (arrayA[i] !== arrayB[i]) {
         return i;
       }
     }
-    return null;
+    throw new Error(`No difference found between ${arrayA} and ${arrayB}`);
   }
 
   /**
    * @param stepNumber Integer between 1 and the last step in history
    * @return {x: Number, y: Number} with the location of the move, zero-based values
    */
-  getMoveLocation(stepNumber) {
+  getMoveLocation(stepNumber: number) {
     const squaresAfterMove = [...this.state.history[stepNumber].squares];
     const squaresBeforeMove = [...this.state.history[stepNumber - 1].squares];
 
@@ -97,7 +120,7 @@ class Game extends React.Component {
     };
   }
 
-  handleClick(squareId) {
+  handleClick(squareId: number) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -120,7 +143,7 @@ class Game extends React.Component {
     });
   }
 
-  jumpTo(step) {
+  jumpTo(step: number) {
     this.setState({
       stepNumber: step,
       nextTurn: Boolean(step % 2) ? "O" : "X"
@@ -188,7 +211,7 @@ class Game extends React.Component {
   }
 }
 
-function calculateWinner(squares) {
+function calculateWinner(squares: SquareValue[]): {player: SquareValue, line: number[]} | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],

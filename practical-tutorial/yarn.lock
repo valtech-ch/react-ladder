@@ -1988,6 +1988,18 @@
     "@typescript-eslint/types" "4.15.2"
     eslint-visitor-keys "^2.0.0"
 
+"@valtech-ch/eslint-config-base@^1.0.0":
+  version "1.0.0"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@valtech-ch/eslint-config-base/-/eslint-config-base-1.0.0.tgz#d974ad0e6d2575e1d56f71342bb46f0c18e7ffdf"
+  integrity sha1-2XStDm0ldeHVb3E0K7RvDBjn/98=
+
+"@valtech-ch/eslint-config-react@^1.0.0":
+  version "1.0.0"
+  resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@valtech-ch/eslint-config-react/-/eslint-config-react-1.0.0.tgz#9f00975f6d1a4ad8a190809c3157d2ae88f1dde1"
+  integrity sha1-nwCXX20aStihkICcMVfSrojx3eE=
+  dependencies:
+    "@valtech-ch/eslint-config-base" "^1.0.0"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -4604,7 +4616,7 @@ eslint-webpack-plugin@^2.1.0:
     micromatch "^4.0.2"
     schema-utils "^3.0.0"
 
-eslint@^7.11.0:
+eslint@^7.11.0, eslint@^7.20.0:
   version "7.20.0"
   resolved "https://bin.swisscom.com/api/npm/oce-shared-npm-virtual/eslint/-/eslint-7.20.0.tgz#db07c4ca4eda2e2316e7aa57ac7fc91ec550bdc7"
   integrity sha1-2wfEyk7aLiMW56pXrH/JHsVQvcc=

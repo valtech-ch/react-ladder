@@ -1,9 +1,12 @@
 import React from 'react';
+
+import Board from './board';
+
 import './index.css';
 
 class Game extends React.Component<{
 }, {
-  history: {squares: SquareValue[]}[],
+  history: { squares: SquareValue[] }[],
   nextTurn: string,
   stepNumber: number,
   sortAscending: boolean,
@@ -138,7 +141,7 @@ class Game extends React.Component<{
   }
 }
 
-function calculateWinner(squares: SquareValue[]): {player: SquareValue, line: number[]} | null {
+function calculateWinner(squares: SquareValue[]): { player: SquareValue, line: number[] } | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],

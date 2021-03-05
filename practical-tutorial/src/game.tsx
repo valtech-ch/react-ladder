@@ -160,3 +160,5 @@ function calculateWinner(squares: SquareValue[]): {player: SquareValue, line: nu
   }
   return null;
 }
+
+export default Game;

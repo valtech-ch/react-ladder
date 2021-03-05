@@ -70,4 +70,6 @@ class Board extends React.Component<{
   }
 }
 
+export type { SquareValue };
+
 export default Board;

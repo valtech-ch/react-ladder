@@ -1,8 +1,46 @@
 import React from 'react';
 
+import type { SquareValue } from './board';
+
 import Board from './board';
 
 import './index.css';
+
+function calculateWinner(squares: SquareValue[]): { player: SquareValue, line: number[] } | null {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i += 1) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return {
+        player: squares[a],
+        line: lines[i],
+      };
+    }
+  }
+  return null;
+}
+
+/**
+ * @pre There is at least one difference between arrayA and arrayB
+ * @pre arrayA.length === arrayB.length
+ */
+function getFirstDifferencePosition(arrayA: SquareValue[], arrayB: SquareValue[]): number {
+  for (let i = 0; i < arrayA.length; i += 1) {
+    if (arrayA[i] !== arrayB[i]) {
+      return i;
+    }
+  }
+  throw new Error(`No difference found between ${arrayA} and ${arrayB}`);
+}
 
 class Game extends React.Component<{
 }, {
@@ -21,38 +59,11 @@ class Game extends React.Component<{
     };
   }
 
-  /**
-   * @pre There is at least one difference between arrayA and arrayB
-   * @pre arrayA.length === arrayB.length
-   */
-  getFirstDifferencePosition(arrayA: SquareValue[], arrayB: SquareValue[]): number {
-    for (let i = 0; i < arrayA.length; i++) {
-      if (arrayA[i] !== arrayB[i]) {
-        return i;
-      }
-    }
-    throw new Error(`No difference found between ${arrayA} and ${arrayB}`);
-  }
-
-  /**
-   * @param stepNumber Integer between 1 and the last step in history
-   * @return {x: Number, y: Number} with the location of the move, zero-based values
-   */
-  getMoveLocation(stepNumber: number) {
-    const squaresAfterMove = [...this.state.history[stepNumber].squares];
-    const squaresBeforeMove = [...this.state.history[stepNumber - 1].squares];
-
-    const firstDifferencePosition = this.getFirstDifferencePosition(squaresBeforeMove, squaresAfterMove);
-
-    return {
-      x: firstDifferencePosition % 3,
-      y: Math.floor(firstDifferencePosition / 3),
-    };
-  }
-
   handleClick(squareId: number) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
+    const { history, nextTurn, stepNumber } = this.state;
+
+    const historyItem = history.slice(0, stepNumber + 1);
+    const current = historyItem[historyItem.length - 1];
     const squares = current.squares.slice();
 
     if (squares[squareId] !== null) { // if square already filled
@@ -63,14 +74,32 @@ class Game extends React.Component<{
       return;
     }
 
-    squares[squareId] = this.state.nextTurn;
+    squares[squareId] = nextTurn;
     this.setState({
-      history: history.concat([{
+      history: historyItem.concat([{
         squares,
       }]),
-      nextTurn: this.state.nextTurn === 'X' ? 'O' : 'X',
-      stepNumber: history.length,
+      nextTurn: nextTurn === 'X' ? 'O' : 'X',
+      stepNumber: historyItem.length,
     });
+  }
+
+  /**
+   * @param stepNumber Integer between 1 and the last step in history
+   * @return {x: Number, y: Number} with the location of the move, zero-based values
+   */
+  getMoveLocation(stepNumber: number) {
+    const { history } = this.state;
+
+    const squaresAfterMove = [...history[stepNumber].squares];
+    const squaresBeforeMove = [...history[stepNumber - 1].squares];
+
+    const firstDifferencePosition = getFirstDifferencePosition(squaresBeforeMove, squaresAfterMove);
+
+    return {
+      x: firstDifferencePosition % 3,
+      y: Math.floor(firstDifferencePosition / 3),
+    };
   }
 
   jumpTo(step: number) {
@@ -81,11 +110,15 @@ class Game extends React.Component<{
   }
 
   render() {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[this.state.stepNumber];
+    const {
+      history, nextTurn, sortAscending, stepNumber,
+    } = this.state;
+
+    const historyItem = history.slice(0, stepNumber + 1);
+    const current = historyItem[stepNumber];
     const winner = calculateWinner(current.squares);
 
-    let moves = history.map((step, move) => {
+    let moves = historyItem.map((step, move) => {
       let desc;
 
       if (move > 0) {
@@ -95,28 +128,28 @@ class Game extends React.Component<{
         desc = 'Go to game start';
       }
 
-      if (move === history.length - 1) {
+      if (move === historyItem.length - 1) {
         desc = <strong>{desc}</strong>;
       }
 
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button type="button" onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
     });
 
-    if (!this.state.sortAscending) {
+    if (!sortAscending) {
       moves = moves.reverse();
     }
 
     let status;
     if (winner) {
       status = `Winner: ${winner.player} 🍾🥳🎈`;
-    } else if (this.state.stepNumber === 9) {
+    } else if (stepNumber === 9) {
       status = '😑 Draw';
     } else {
-      status = `Next player: ${this.state.nextTurn}`;
+      status = `Next player: ${nextTurn}`;
     }
 
     return (
@@ -132,36 +165,13 @@ class Game extends React.Component<{
           <div>{ status }</div>
           <p>
             Move history list:
-            <button onClick={() => this.setState({ sortAscending: !this.state.sortAscending })}>Toggle sort</button>
+            <button type="button" onClick={() => this.setState({ sortAscending: !sortAscending })}>Toggle sort</button>
           </p>
           <ol>{ moves }</ol>
         </div>
       </div>
     );
   }
-}
-
-function calculateWinner(squares: SquareValue[]): { player: SquareValue, line: number[] } | null {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return {
-        player: squares[a],
-        line: lines[i],
-      };
-    }
-  }
-  return null;
 }
 
 export default Game;

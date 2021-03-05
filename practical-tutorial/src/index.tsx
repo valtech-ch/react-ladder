@@ -9,14 +9,16 @@ function Square(props: {
     onClick: () => void,
     value: SquareValue,
 }) {
+  const { highlighted, onClick, value } = props;
+
   const classes = [
     'square',
-    props.highlighted ? 'square--highlighted' : '',
+    highlighted ? 'square--highlighted' : '',
   ].join(' ');
 
   return (
-    <button className={classes} onClick={props.onClick}>
-      {props.value}
+    <button type="button" className={classes} onClick={onClick}>
+      {value}
     </button>
   );
 }

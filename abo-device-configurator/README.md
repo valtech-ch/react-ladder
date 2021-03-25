@@ -1,4 +1,13 @@
-# Getting Started with Create React App
+# Mobile abo and device configurator
+
+Sample application that allows selecting a mobile abo and a smartphone with it.
+
+Featuring:
+
+* Abo page
+* Device list page
+* Device detail page
+* Summary page with your selection
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

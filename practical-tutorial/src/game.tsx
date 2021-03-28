@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import type { SquareValue } from './board';
 
@@ -49,8 +49,8 @@ class Game extends React.Component<{
   stepNumber: number,
   sortAscending: boolean,
 }> {
-  constructor(props: {}) {
-    super(props);
+  constructor() {
+    super({});
     this.state = {
       history: [{ squares: [null, null, null, null, null, null, null, null, null] }],
       nextTurn: 'X',
@@ -59,7 +59,7 @@ class Game extends React.Component<{
     };
   }
 
-  handleClick(squareId: number) {
+  handleClick(squareId: number): void {
     const { history, nextTurn, stepNumber } = this.state;
 
     const historyItem = history.slice(0, stepNumber + 1);
@@ -88,7 +88,7 @@ class Game extends React.Component<{
    * @param stepNumber Integer between 1 and the last step in history
    * @return {x: Number, y: Number} with the location of the move, zero-based values
    */
-  getMoveLocation(stepNumber: number) {
+  getMoveLocation(stepNumber: number): {x: number, y: number} {
     const { history } = this.state;
 
     const squaresAfterMove = [...history[stepNumber].squares];
@@ -102,14 +102,14 @@ class Game extends React.Component<{
     };
   }
 
-  jumpTo(step: number) {
+  jumpTo(step: number): void {
     this.setState({
       stepNumber: step,
       nextTurn: step % 2 ? 'O' : 'X',
     });
   }
 
-  render() {
+  render(): ReactElement {
     const {
       history, nextTurn, sortAscending, stepNumber,
     } = this.state;

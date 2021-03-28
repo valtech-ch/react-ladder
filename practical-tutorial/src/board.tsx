@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import './index.css';
 
@@ -8,7 +8,7 @@ function Square(props: {
   highlighted: boolean,
   onClick: () => void,
   value: SquareValue,
-}) {
+}): ReactElement {
   const { highlighted, onClick, value } = props;
 
   const classes = [
@@ -28,7 +28,7 @@ class Board extends React.Component<{
   onClick: (i: number) => void,
   squares: SquareValue[],
 }> {
-  renderSquare(i: number, highlighted: boolean) {
+  renderSquare(i: number, highlighted: boolean): ReactElement {
     const { onClick, squares } = this.props;
 
     return (
@@ -41,7 +41,7 @@ class Board extends React.Component<{
     );
   }
 
-  renderRow(j: number) {
+  renderRow(j: number): ReactElement {
     const { highlightedSquares } = this.props;
 
     const rowSquares = [0, 1, 2].map((i) => {
@@ -59,7 +59,7 @@ class Board extends React.Component<{
     );
   }
 
-  render() {
+  render(): ReactElement {
     const rows = [0, 1, 2].map((j) => this.renderRow(j));
 
     return (

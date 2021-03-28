@@ -4,8 +4,8 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'plugin:react/recommended',
-    'airbnb-typescript',
+    '@valtech-ch/eslint-config/config/react',
+    '@valtech-ch/eslint-config/rules/react',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
